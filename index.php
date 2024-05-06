@@ -74,6 +74,11 @@ try {
             $adminController->deleteArticle();
             break;
 
+        case 'adminMonitoring':
+            $adminMonitoringController = new AdminMonitoringController();
+            $adminMonitoringController->showAdminMonitoring();
+            break;
+
         default:
             throw new Exception("La page demandée n'existe pas.");
     }

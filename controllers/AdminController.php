@@ -79,6 +79,9 @@ class AdminController {
         $_SESSION['user'] = $user;
         $_SESSION['idUser'] = $user->getId();
 
+         // Debug statement to check the contents of $_SESSION['user']
+        var_dump($_SESSION['user']);
+    
         // On redirige vers la page d'administration.
         Utils::redirect("admin");
     }
@@ -176,4 +179,21 @@ class AdminController {
         // On redirige vers la page d'administration.
         Utils::redirect("admin");
     }
+
+    public function monitoringPage() : void 
+    {
+        
+        $this->checkIfUserIsConnected();
+
+        if(!isset($_SESSION['user'])) {
+            echo "User object not found in session.";
+            return;
+        }
+
+        $user = $_SESSION['user'];
+        if ($user instanceof User && $user->getRole() !== 'admin') {
+        // Redirect to another page 
+        Utils::redirect("index.php");
+        }
+    }     
 }
