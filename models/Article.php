@@ -110,11 +110,30 @@
      * Par défaut, c'est le format de date mysql qui est utilisé.
      */
     public function setDateUpdate(string|DateTime $dateUpdate, string $format = 'Y-m-d H:i:s') : void 
-    {
+    /*{
         if (is_string($dateUpdate)) {
             $dateUpdate = DateTime::createFromFormat($format, $dateUpdate);
         }
         $this->dateUpdate = $dateUpdate;
+    }*/
+
+    {
+        if ($dateUpdate === null) {
+            $this->dateUpdate = null;
+        } elseif (is_string($dateUpdate)) {
+            //echo "String date provided: $dateUpdate\n";
+            $updatedDate = DateTime::createFromFormat($format, $dateUpdate);
+            if ($updatedDate === false) {
+                throw new InvalidArgumentException('Invalid date format for setDateUpdate');
+            }
+            //echo "Date successfully parsed: " . $updatedDate->format($format) . "\n";
+            $this->dateUpdate = $updatedDate;
+        } elseif ($dateUpdate instanceof DateTime) {
+            //echo "DateTime object provided: " . $dateUpdate->format($format) . "\n";
+            $this->dateUpdate = $dateUpdate;
+        } else {
+            throw new InvalidArgumentException('Invalid argument type for setDateUpdate');
+        }
     }
 
     /**
@@ -127,4 +146,5 @@
     {
         return $this->dateUpdate;
     }
+
  }

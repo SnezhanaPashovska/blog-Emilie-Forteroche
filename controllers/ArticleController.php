@@ -31,13 +31,23 @@ class ArticleController
             throw new Exception("L'article demandé n'existe pas.");
         }
 
-        $this->recordView($id);
+        $articleManager->recordView($id);
+
+        $dbManager = DBManager::getInstance();
+        $pdo = $dbManager->getPDO();
+        $commentCounter = new CommentCounter($pdo);
+        $totalComments = $commentCounter->getTotalCommentsArticleId($id);
+
+        $page = Utils::request("page", 1);
+        $perPage = 3;
 
         $commentManager = new CommentManager();
-        $comments = $commentManager->getAllCommentsByArticleId($id);
+        $comments = $commentManager->getAllCommentsByArticleId($id, $page, $perPage);
+
+        $totalPages = ceil($totalComments / $perPage);
 
         $view = new View($article->getTitle());
-        $view->render("detailArticle", ['article' => $article, 'comments' => $comments]);
+        $view->render("detailArticle", ['article' => $article, 'comments' => $comments, 'totalPages' => $totalPages]);
     }
 
     /**
@@ -59,18 +69,5 @@ class ArticleController
         $view->render("apropos");
     }
 
-    private function recordView($articleId) : void {
-        try {
-            $pdo = new PDO('mysql:host=' . DB_HOST . ';dbname=' . DB_NAME . ';charset=utf8', DB_USER, DB_PASS);
-            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-            // Insert a new record into the view table
-            $statement = $pdo->prepare("INSERT INTO view (article_id, view_count) VALUES (:article_id, NOW())");
-            $statement->bindParam(':article_id', $articleId, PDO::PARAM_INT);
-            $statement->execute();
-        } catch (PDOException $e) {
-            // Handle database errors
-            echo "Error recording view: " . $e->getMessage();
-        }
-    }
+    
 }

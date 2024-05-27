@@ -10,10 +10,11 @@ class CommentManager extends AbstractEntityManager
      * @param int $idArticle : l'id de l'article.
      * @return array : un tableau d'objets Comment.
      */
-    public function getAllCommentsByArticleId(int $idArticle) : array
+    public function getAllCommentsByArticleId(int $idArticle, int $page, int $perPage) : array
     {
-        $sql = "SELECT * FROM comment WHERE id_article = :idArticle";
-        $result = $this->db->query($sql, ['idArticle' => $idArticle]);
+        $offset = ($page -1) * $perPage;
+        $sql = "SELECT * FROM comment WHERE id_article = $idArticle ORDER BY date_creation DESC LIMIT $perPage OFFSET $offset";
+        $result = $this->db->query($sql);
         $comments = [];
 
         while ($comment = $result->fetch()) {
@@ -59,6 +60,7 @@ class CommentManager extends AbstractEntityManager
      * @param Comment $comment : l'objet Comment à supprimer.
      * @return bool : true si la suppression a réussi, false sinon.
      */
+    // Supprimer le commentaire de la base de données
     public function deleteComment(Comment $comment) : bool
     {
         $sql = "DELETE FROM comment WHERE id = :id";

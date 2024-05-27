@@ -30,7 +30,10 @@ abstract class AbstractEntity
         foreach ($data as $key => $value) {
             $method = 'set' . str_replace('_', '', ucwords($key, '_'));
             if (method_exists($this, $method)) {
+                if ($value !== null) {
                 $this->$method($value);
+            }
+
             }
         }
     }

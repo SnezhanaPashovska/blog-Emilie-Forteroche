@@ -31,12 +31,26 @@
                 echo '  <div class="detailComment">';
                 echo '      <h3 class="info">Le ' . Utils::convertDateToFrenchFormat($comment->getDateCreation()) . ", " . Utils::format($comment->getPseudo()) . ' a écrit :</h3>';
                 echo '      <p class="content">' . Utils::format($comment->getContent()) . '</p>';
+                if (isset($_SESSION['user'])) {
+                    echo '<a href="index.php?action=deleteComment&id=' . $comment->getId() . '" onclick="return confirm(\'Êtes-vous sûr de vouloir supprimer ce commentaire ?\')"class="delete-comment">Supprimer</a>';
+                }
+            
                 echo '  </div>';
+               
                 echo '</li>';
             }               
             echo '</ul>';
         } 
     ?>
+
+<div class="pagination">
+    <?php 
+        for ($i = 1; $i <= $totalPages; $i++) { 
+            echo '<a href="index.php?action=showArticle&id=' . $article->getId() . '&page=' . $i . '">' . $i . '</a>';
+        } 
+    ?>
+</div>
+
 
     <form action="index.php" method="post" class="foldedCorner">
         <h2>Commenter</h2>

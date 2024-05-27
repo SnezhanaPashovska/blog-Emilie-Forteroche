@@ -2,17 +2,20 @@
 /**
  * Contrôleur de la partie admin.
  */
- 
+
 class AdminController {
 
     /**
      * Affiche la page d'administration.
      * @return void
      */
+
     public function showAdmin() : void
     {
         // On vérifie que l'utilisateur est connecté.
         $this->checkIfUserIsConnected();
+
+        $userManager = new UserManager();
 
         // On récupère les articles.
         $articleManager = new ArticleManager();
@@ -21,7 +24,7 @@ class AdminController {
         // On affiche la page d'administration.
         $view = new View("Administration");
         $view->render("admin", [
-            'articles' => $articles
+            'articles' => $articles,
         ]);
     }
 
@@ -84,6 +87,7 @@ class AdminController {
     
         // On redirige vers la page d'administration.
         Utils::redirect("admin");
+        
     }
 
     /**
@@ -180,19 +184,25 @@ class AdminController {
         Utils::redirect("admin");
     }
 
+    // New code
+
     public function monitoringPage() : void 
     {
-        
+        // Vérifie si l'utilisateur est connecté
         $this->checkIfUserIsConnected();
 
+        // Vérifie si l'objet utilisateur est présent dans la session
         if(!isset($_SESSION['user'])) {
-            echo "User object not found in session.";
-            return;
+            // Affiche un message d'erreur si l'objet utilisateur n'est pas trouvé dans la session
+            echo "Objet utilisateur non trouvé dans la session.";
+            return; // Sort de la méthode
         }
 
+        // Récupère l'objet utilisateur depuis la session
         $user = $_SESSION['user'];
+        // Vérifie si l'objet utilisateur est une instance de la classe User et s'il n'a pas le rôle d'administrateur
         if ($user instanceof User && $user->getRole() !== 'admin') {
-        // Redirect to another page 
+        // Redirige vers une autre page si l'utilisateur n'est pas un administrateur
         Utils::redirect("index.php");
         }
     }     

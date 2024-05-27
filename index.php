@@ -5,7 +5,7 @@ require_once 'config/autoload.php';
 
 // On récupère l'action demandée par l'utilisateur.
 // Si aucune action n'est demandée, on affiche la page d'accueil.
-$action = Utils::request('action', 'home');
+$action = \Utils::request('action', 'home');
 
 // Try catch global pour gérer les erreurs
 try {
@@ -77,6 +77,11 @@ try {
         case 'adminMonitoring':
             $adminMonitoringController = new AdminMonitoringController();
             $adminMonitoringController->showAdminMonitoring();
+            break;
+        
+        case 'deleteComment': 
+            $commentController = new CommentController();
+            $commentController->deleteComment();
             break;
 
         default:

@@ -112,6 +112,59 @@ form .formGrid .submit {
     border: none;
 }
 
+/** Style de tableau**/
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+  }
+  
+  th {
+    background-color: #EFE1BA;
+    width: 25%;
+  }
+
+  th:hover {
+    color: #F13C1F;
+  }
+
+  .pagination {
+    margin-top: 20px;
+    text-align: center;
+}
+
+tr:nth-child(even) td {
+    background-color: #F5F0E6;
+}
+
+.pagination a {
+    display: inline-block;
+    padding: 5px 10px;
+    margin: 0 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    text-decoration: none;
+    color: #333;
+}
+
+.pagination a:hover {
+    background-color: #f0f0f0;
+}
+
+.pagination .active {
+    background-color: #007bff;
+    color: #fff;
+    border: 1px solid #007bff;
+}
+
+
+
 /**
  * Coin replié des formulaires
  */
@@ -274,6 +327,13 @@ a.info {
 }
 
 /* On redéfinit certaines parties du "info" pour l'affichage dans les commentaires */
+.detailComment {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    
+}
 .detailComment .info {
     margin: 5px 0 5px 0;
     font-style: normal;
@@ -281,6 +341,17 @@ a.info {
 
 .detailComment .content {
     margin: 5px 0 5px 0;
+}
+
+.delete-comment {
+    border: 1px solid #99A140;
+    background-color: #99A140;
+    margin-top: 15px;
+    height: 30px;
+    width: 10%;
+    text-align: center;
+   color: white;
+    padding-top: 5px;
 }
 
 /* Page d'erreur */
@@ -309,8 +380,16 @@ a.info {
 
 .adminArticle {
     margin-bottom: 20px;
-    background-color: var(--commentPaleColor);
+    background-color: var(--commentPaleColor, --headerPaleColor);
     color: white;
+}
+
+.adminArticle .articleLine.odd {
+    background-color: #99A140;
+}
+
+.adminArticle .articleLine.even {
+    background-color: #D79922;
 }
 
 .articleLine {
@@ -328,6 +407,8 @@ a.info {
     width: 200px;
 }
 
+
+
 .articleLine .content {
     flex-grow: 1;
 }
@@ -336,6 +417,8 @@ a.info {
     padding: 20px;
     border: 1px solid var(--backgroundColor);
 }
+
+
 
 /** 
  * Footer global de la page.
