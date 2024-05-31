@@ -1,18 +1,12 @@
 <?php
 
-// Créer une instance de AdminMonitoringControlle
 $controller = new AdminMonitoringController();
 
-// Initialiser les valeurs par défaut pour sortCriteria et order
-$sortCriteria = $_GET['sort'] ?? 'date_creation'; // Critère de tri par défaut
-$order = $_GET['order'] ?? 'asc'; // Ordre de tri par défaut
+$sortCriteria = $_GET['sort'] ?? 'date_creation'; 
+$order = $_GET['order'] ?? 'asc'; 
 
-// Filtrer et trier les articles en fonction du critère de tri
 $articleManager = new ArticleManager();
 $sortedArticles = $articleManager->filterTable($sortCriteria);
-
-// Fetch the articles data after sorting
-//$articles = $controller->fetchArticles();
 
 ?>
 

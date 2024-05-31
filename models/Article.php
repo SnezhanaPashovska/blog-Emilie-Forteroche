@@ -117,20 +117,23 @@
         $this->dateUpdate = $dateUpdate;
     }*/
 
-    {
+    {   // Si la date de mise à jour est nulle, on attribue null à l'attribut dateUpdate.
         if ($dateUpdate === null) {
             $this->dateUpdate = null;
+        // Si la date de mise à jour est une chaîne de caractères, on tente de la convertir en objet DateTime.
         } elseif (is_string($dateUpdate)) {
-            //echo "String date provided: $dateUpdate\n";
+            // Convertit la chaîne de caractères en DateTime en utilisant un format spécifique.
             $updatedDate = DateTime::createFromFormat($format, $dateUpdate);
+            // Si la conversion échoue, lance une exception.
             if ($updatedDate === false) {
                 throw new InvalidArgumentException('Invalid date format for setDateUpdate');
             }
-            //echo "Date successfully parsed: " . $updatedDate->format($format) . "\n";
+            // Si la conversion réussit, assigne l'objet DateTime à l'attribut dateUpdate.
             $this->dateUpdate = $updatedDate;
+            // Si la date de mise à jour est déjà un objet DateTime, on l'assigne directement.
         } elseif ($dateUpdate instanceof DateTime) {
-            //echo "DateTime object provided: " . $dateUpdate->format($format) . "\n";
             $this->dateUpdate = $dateUpdate;
+        // Si le type de l'argument n'est ni null, ni string, ni DateTime, lance une exception.
         } else {
             throw new InvalidArgumentException('Invalid argument type for setDateUpdate');
         }
@@ -146,5 +149,4 @@
     {
         return $this->dateUpdate;
     }
-
  }

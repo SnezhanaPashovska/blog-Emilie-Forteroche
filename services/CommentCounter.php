@@ -1,6 +1,7 @@
 <?php
 
-class CommentCounter {
+class CommentCounter 
+{
   private $db;
 
   public function __construct(PDO $db)

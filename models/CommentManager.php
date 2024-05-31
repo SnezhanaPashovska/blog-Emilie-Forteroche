@@ -12,9 +12,11 @@ class CommentManager extends AbstractEntityManager
      */
     public function getAllCommentsByArticleId(int $idArticle, int $page, int $perPage) : array
     {
+        // Calcul de pour la pagination
         $offset = ($page -1) * $perPage;
         $sql = "SELECT * FROM comment WHERE id_article = $idArticle ORDER BY date_creation DESC LIMIT $perPage OFFSET $offset";
         $result = $this->db->query($sql);
+        // Tableau pour stocker les commentaires
         $comments = [];
 
         while ($comment = $result->fetch()) {
@@ -67,5 +69,4 @@ class CommentManager extends AbstractEntityManager
         $result = $this->db->query($sql, ['id' => $comment->getId()]);
         return $result->rowCount() > 0;
     }
-
 }

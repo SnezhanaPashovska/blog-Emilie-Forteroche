@@ -33,17 +33,20 @@ class ArticleController
 
         $articleManager->recordView($id);
 
+        //Pagination
         $dbManager = DBManager::getInstance();
         $pdo = $dbManager->getPDO();
         $commentCounter = new CommentCounter($pdo);
         $totalComments = $commentCounter->getTotalCommentsArticleId($id);
 
+        // Numéro de la page et du nombre de commentaires par page
         $page = Utils::request("page", 1);
         $perPage = 3;
 
         $commentManager = new CommentManager();
         $comments = $commentManager->getAllCommentsByArticleId($id, $page, $perPage);
 
+        // Calcul du nombre total de pages
         $totalPages = ceil($totalComments / $perPage);
 
         $view = new View($article->getTitle());

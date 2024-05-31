@@ -43,14 +43,13 @@
         } 
     ?>
 
-<div class="pagination">
-    <?php 
-        for ($i = 1; $i <= $totalPages; $i++) { 
-            echo '<a href="index.php?action=showArticle&id=' . $article->getId() . '&page=' . $i . '">' . $i . '</a>';
-        } 
-    ?>
-</div>
-
+    <div class="pagination">
+        <?php 
+            for ($i = 1; $i <= $totalPages; $i++) { 
+                echo '<a href="index.php?action=showArticle&id=' . $article->getId() . '&page=' . $i . '">' . $i . '</a>';
+            } 
+        ?>
+    </div>
 
     <form action="index.php" method="post" class="foldedCorner">
         <h2>Commenter</h2>

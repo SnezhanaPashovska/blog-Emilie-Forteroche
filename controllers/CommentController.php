@@ -45,20 +45,14 @@ class CommentController
         Utils::redirect("showArticle", ['id' => $idArticle]);
     }
 
-
+    //Supprimer le commentaire
     public function deleteComment() : void 
     {
-        // Récupération de l'ID du commentaire à supprimer depuis la requête GET.
         $commentId = Utils::request("id");
-        // On vérifie si l'ID du commentaire a bien été récupéré (c'est-à-dire qu'il n'est pas null)
         if ($commentId !== null) {
-        // Instanciation du CommentManager
             $commentManager = new CommentManager();
-        // Récupération du commentaire
             $comment = $commentManager->getCommentById($commentId);
-        // On vérifie si le commentaire existe
             if ($comment !== null) {
-        // On appelle la méthode deleteComment de CommentManager pour supprimer le commentaire.
                 $result = $commentManager->deleteComment($comment);
                 if ($result) {
                     Utils::redirect("showArticle", ["id" => $comment->getIdArticle()]);
@@ -69,7 +63,5 @@ class CommentController
                 throw new Exception("L'identifiant du commentaire est invalide.");
             }
         }
-    }
-
-    
+    }    
 }

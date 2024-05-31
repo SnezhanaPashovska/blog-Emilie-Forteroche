@@ -19,7 +19,5 @@
 
 <script>
 
-    
-    
 
 </script>
